@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>SkyChat</title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="favicon.ico">
+
+  <!--<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />-->
+  <link href="./styles/appFramework.css" rel="stylesheet" type="text/css" />
+  <link href="./styles/appDefault.css" rel="stylesheet" type="text/css" />
+  <link href="./styles/mobileOverride.css" rel="stylesheet" type="text/css" />
+
+  <script defer src="main.dart.js"></script>
+
+  <!-- skynet-js -->
+  <script src="https://skynet-js.hns.siasky.net/4.0-beta/index.js"></script>
+  <!-- Feed DAC -->
+  <script src="https://feed-dac.hns.siasky.net/library.js"></script>
+  <!-- Social DAC -->
+  <script src="https://social-dac.hns.siasky.net/library.js"></script>
+</head>
+
+<body>
+  <!-- Authentication Modal -->
+  <div id="loginModal" class="modal" style="display: block">
+    <div class="modal-content">
+      <p>Initializing MySky...</p>
+    </div>
+
+  </div>
+
+  <div class="windowTitle" ondblclick="console.log(1);">
+    <div class="windowTitleText centerizeVertically" ondblclick="console.log(2);">SkyChat</div>
+    <div class="dragableHeader centerizeVertically" ondblclick="console.log(3);"></div>
+    <div class="centerizeHorizontally windowBtns">
+      <!--<div class="minBtn"></div>
+				<div class="maxBtn"></div>-->
+      <div class="closeBtn" onClick="window.close();"></div>
+    </div>
+  </div>
+  <nav class="useHiddenScrollBar">
+    <a href="javascript:alert('Feature in development');"></a>
+    <hr />
+    <div id="serverElemList">
+      <!-- <a href="#" id="server_nul" class="active"><i class="fas fa-cloud"></i></a> -->
+    </div>
+    <a id="addRemServer" href="javascript:alert('Feature in development');"></a>
+  </nav>
+  <header>
+    <div class="serverHeader" id="headerServerName">
+      SkyChat
+      <!--<i class="fas fa-angle-down"></i>-->
+    </div>
+    <div class="serverContent useScrollBar" id="headerBrowseServer">
+      <div class="catergory">
+        <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span
+            class="channelUnreadCount">1</span></span>
+        <div class="channel active">welcome</div>
+      </div>
+      <!--<div class="catergory">
+          <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">5</span></span>
+          <div class="channel active">general</div>
+          <div class="channel">discussion</div>
+          <div class="channel">skynet</div>
+          <div class="channel">development</div>
+          <div class="channel">help</div>
+        </div>
+        <div class="catergory">
+          <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">5</span></span>
+          <div class="channel">general</div>
+          <div class="channel">discussion</div>
+          <div class="channel">skynet</div>
+          <div class="channel">development</div>
+          <div class="channel">help</div>
+        </div>
+        <div class="catergory">
+          <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">5</span></span>
+          <div class="channel">general</div>
+          <div class="channel">discussion</div>
+          <div class="channel">skynet</div>
+          <div class="channel">development</div>
+          <div class="channel">help</div>
+        </div>
+        <div class="catergory">
+          <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">5</span></span>
+          <div class="channel">general</div>
+          <div class="channel">discussion</div>
+          <div class="channel">skynet</div>
+          <div class="channel">development</div>
+          <div class="channel">help</div>
+        </div>
+        <div class="catergory"><span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">0</span></span>
+        </div>
+        <div class="catergory">
+          <span class="title" onClick="this.parentNode.classList.toggle('hide');">Text Channels<span class="channelUnreadCount">5</span></span>
+          <div class="channel">general</div>
+          <div class="channel">discussion</div>
+          <div class="channel">skynet</div>
+          <div class="channel">development</div>
+          <div class="channel">help</div>
+        </div>
+      </div>-->
+  </header>
+  <content>
+    <div class="channelHeader">
+      #<span class="channelName">welcome</span>
+      <!--<div id="savedChannelToggle" onClick="this.classList.toggle('isChecked');">
+          <i class="far fa-star"></i>
+          <i class="checkmark fas fa-star"></i>
+        </div>-->
+      <div class="rightSide centerizeHorizontally">
+        <div class="memberCount" onClick="document.body.classList.toggle('openMembers');"></div>
+        <!--<form class="searchField">
+            <table>
+              <tr>
+                <td>
+                  <input type="text" name="query" placeholder="Search..." />
+                </td>
+                <td>
+                  <button type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </form>
+          <i class="far fa-bell centerizeHorizontally"></i>-->
+        <i class="fas fa-ellipsis-v centerizeHorizontally"></i>
+      </div>
+    </div>
+    <div class="channelContent useScrollBar" onLoad="setInterval(App.UI.content.chatWindow.updateScrollFunc, 500);">
+      <div class="channelChats centerizeVertically">
+        <h1>Welcome to SkyChat</h1>
+        <p>
+          Join a new server or open an existing server using the left sidebar!
+        </p>
+        <!--<div class="chatEntry">
+            <span>doggie</span>
+            <div>i ran out of ideas what to say in these messages</div>
+            <div>lmaooo</div>
+          </div>
+          <div class="chatEntry">
+            <span>Kaveman</span>
+            <div>'f' all my files are lost :(</div>
+            <div>any recovery software options?</div>
+          </div>
+          <div class="chatEntry">
+            <span>doggie</span>
+            <div>why are u reading this green?</div>
+          </div>
+          <div class="chatEntry">
+            <span>Kaveman</span>
+            <div>i listen to coding music while i code xd</div>
+            <div>btw doggie what font u want?</div>
+          </div>
+          <div class="chatEntry">
+            <span>doggie</span> <span>20:40</span>
+            <div><a href="http://draw.io" target="_blank">draw.io</a> is so simple to use but so powerful damn</div>
+          </div>-->
+      </div>
+    </div>
+    <form id="channelInput" style="margin-bottom: 0px;">
+
+      <div style="display: flex;">
+
+        <div class="inputField" style="padding-right: 10px; flex-grow: 1;">
+          <input type="text" placeholder="Write something..." id="msgField"
+            placeholder="You do not have permission to send messages here" disabled>
+
+        </div>
+
+
+        <input class="button-primary float-right" type="submit" value="Send"
+          style="flex-basis: 70px;  padding: 0 1.0rem;">
+
+      </div>
+
+    </form>
+    <!--    <form class="channelInput" onsubmit="skychatClick('sendMessage'); return false;">
+      <table>
+        <tr>
+           <td class="attachBtn">
+            <input id="attachment" type="file" name="attachment" hidden />
+            <label for="attachment"></label>
+            <div class="detachFileBtn disabled">
+              <div class="dot"></div>
+            </div>
+          </td> 
+          <td><i class="fas fa-microphone"></i></td>
+          <td class="inputField">
+            <div>
+              <textarea id="channelInputTextarea" name="msg" class="useScrollBar"
+                placeholder="You do not have permission to send messages here" disabled></textarea>
+
+
+
+            </div>
+          </td>
+          <td class="addEmojiBtn"></td>
+        </tr>
+      </table>
+    </form> -->
+  </content>
+  <aside>
+    <div class="header">Members</div>
+    <div id="membersList" class="content useScrollBar">
+      <div class="entry" style="text-align: center;">You do not have access to member listing</div>
+    </div>
+  </aside>
+
+  <script src="https://kit.fontawesome.com/2a33003987.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

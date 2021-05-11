@@ -1,0 +1,717 @@
+@charset "UTF-8";
+
+.useScrollBar::-webkit-scrollbar {
+  width: 10px;
+  margin-right: 2px;
+}
+
+.useScrollBar::-webkit-scrollbar-track {
+  /*box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.useScrollBar::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+nav {
+  height: 100%;
+  width: 60px;
+  background-color: rgba(6, 6, 6, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 5px 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  padding-top: calc(var(--header-padding) + 5px);
+}
+
+nav img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.5);
+  object-fit: cover;
+}
+
+nav a {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 10px 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+  object-fit: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  overflow: hidden;
+  transition: 200ms;
+}
+
+nav a:not(.active) {
+  opacity: 0.75;
+}
+
+nav a.active {
+  opacity: 1;
+  border-radius: 40%;
+  cursor: default;
+  background-color: #7289da;
+}
+
+nav a.active div {
+  opacity: 1;
+  border-radius: 40%;
+}
+
+nav a:hover {
+  background-color: #7289da;
+  border-radius: 40%;
+  opacity: 1;
+}
+
+nav a div {
+  transition: 200ms;
+}
+
+nav a:hover div {
+  border-radius: 40%;
+}
+
+nav > a:nth-child(1)::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f500";
+}
+
+nav > a:nth-child(1) {
+  opacity: 1;
+}
+
+nav hr {
+  height: 2px;
+  width: 50%;
+  margin: 10px 25%;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+nav a div {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+nav a#addRemServer::before {
+  content: "+";
+  color: #87da72;
+  font-size: 2em;
+}
+
+nav a#addRemServer:hover {
+  background-color: #87da72;
+}
+
+nav a#addRemServer:hover::before {
+  content: "+";
+  color: rgba(255, 255, 255, 1);
+  font-size: 2em;
+}
+
+header {
+  height: 100%;
+  width: 240px;
+  background-color: rgba(43, 49, 55, 0.8);
+  position: fixed;
+  top: 0;
+  left: 60px;
+  padding-top: calc(var(--header-padding) + 5px);
+  box-sizing: border-box;
+}
+
+header .serverHeader {
+  width: 100%;
+  /*border-bottom: 1px solid rgba(255, 255, 255, 0.1);*/
+  padding: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+header .serverHeader i {
+  float: right;
+  height: 16px;
+  width: 16px;
+  font-size: 1.3em;
+  color: rgba(0, 0, 0, 0.5);
+  transition: 100ms;
+  cursor: pointer;
+}
+
+header .serverHeader i:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+header .serverContent {
+  width: 100%;
+  height: calc(100% - 63px);
+  padding: 20px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+header .serverContent .catergory:nth-child(1) {
+  margin-top: 10px;
+}
+
+header .serverContent .catergory {
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  font-size: 9pt;
+  margin-top: 25px;
+  transition: 100ms;
+  overflow: hidden;
+}
+
+header .serverContent .catergory.hide .channel {
+  display: none;
+}
+
+header .serverContent .catergory.hide .channel.active {
+  display: block;
+}
+
+header .serverContent .catergory .title {
+  transition: 100ms;
+  cursor: pointer;
+}
+
+header .serverContent .catergory .title:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+header .serverContent .catergory .channelUnreadCount {
+  float: right;
+}
+
+header .serverContent .catergory .channel {
+  transition: 100ms;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 5px 0;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: lowercase;
+  font-size: 10pt;
+}
+
+header .serverContent .catergory .channel:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 1);
+}
+
+header .serverContent .catergory .channel.active {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 1);
+  font-weight: 800;
+  cursor: default;
+}
+
+header .serverContent .catergory .channel::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f292";
+  padding-right: 5px;
+}
+
+content {
+  height: 100%;
+  width: calc(100% - 60px - 240px);
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: calc(60px + 240px);
+  transition: 100ms;
+  padding-top: calc(var(--header-padding) + 5px);
+  box-sizing: border-box;
+}
+
+.openMembers content {
+  width: calc(100% - 60px - 240px - 240px);
+}
+
+.centerizeVertically {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.centerizeHorizontally {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+content .channelHeader {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  padding-right: 0;
+  font-weight: 600;
+  box-sizing: border-box;
+  color: #000;
+}
+
+content .channelHeader #savedChannelToggle {
+  color: rgba(0, 0, 0, 0.5);
+  display: inline;
+  margin: 5px;
+  font-size: 11pt;
+}
+
+content .channelHeader #savedChannelToggle i {
+  position: absolute;
+  transition: 100ms;
+  top: 24px;
+}
+
+content .channelHeader #savedChannelToggle:hover {
+  color: gold;
+  cursor: pointer;
+}
+
+content .channelHeader #savedChannelToggle i.checkmark {
+  color: gold;
+}
+
+content .channelHeader #savedChannelToggle:not(.isChecked) i.checkmark {
+  visibility: hidden;
+  opacity: 0;
+}
+
+content .channelHeader .rightSide {
+  float: right;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+content .channelHeader .rightSide > i {
+  height: 16px;
+  width: 16px;
+  padding: 0 10px;
+  transition: 200ms;
+}
+
+content .channelHeader .rightSide > i:hover {
+  color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+content .channelHeader .rightSide .searchField {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+content .channelHeader .rightSide .searchField table {
+  height: 100%;
+  width: 100%;
+}
+
+content .channelHeader .rightSide .searchField input[type="text"] {
+  border: 0;
+  font-size: 10pt;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  margin-left: 5px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+content .channelHeader .rightSide .searchField button[type="submit"] {
+  border: 0;
+  background: none;
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: rgba(0, 0, 0, 0.5);
+  transition: 200ms;
+  cursor: pointer;
+}
+
+content .channelHeader .rightSide .searchField button[type="submit"]:hover {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+content .channelHeader .rightSide .memberCount {
+  margin-right: 15px;
+  font-size: 11pt;
+  transition: 100ms;
+  cursor: pointer;
+}
+
+.openMembers content .channelHeader .rightSide .memberCount {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+content .channelHeader .rightSide .memberCount::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+  content: "\f007";
+  padding-right: 5px;
+}
+
+content .channelHeader .rightSide .memberCount:hover {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+content .channelHeader .rightSide .memberCount i {
+  margin-right: 5px;
+}
+
+content .channelContent {
+  height: calc(100% - 63px - 59px);
+  width: 100%;
+  overflow-y: auto;
+}
+
+content .channelContent .channelChats {
+  min-height: 100%;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 5px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+content .channelContent .chatEntry {
+  width: 100%;
+  margin: 5px;
+  padding: 0 15px;
+  padding-right: 60px;
+  box-sizing: border-box;
+}
+
+content .channelContent .chatEntry > span:nth-child(1) {
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+content .channelContent .chatEntry > span:nth-child(1):hover {
+  text-decoration: underline;
+}
+
+content .channelContent .chatEntry > span:not(:nth-child(1)) {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.9em;
+}
+
+content .channelContent .chatEntry div {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+content .channelContent .chatEntry div a {
+  color: #00baff;
+  text-decoration: none;
+}
+
+content .channelContent .chatEntry .fileAttachment .fileDetails {
+  flex: 1;
+  width: 100%;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 10px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  transform: translateY(2px);
+}
+
+content .channelContent .chatEntry div .fileDetails .fileSize {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.8em;
+}
+
+content .channelContent .chatEntry div a:hover {
+  text-decoration: underline;
+}
+
+content .channelContent .chatEntry .fileAttachment {
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  padding: 10px;
+  font-weight: 600;
+  box-sizing: border-box;
+  margin: 5px 1px;
+  max-width: 480px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+
+content .channelContent .chatEntry img.fileAttachment,
+content .channelContent .chatEntry video.fileAttachment {
+  padding: 0;
+  overflow: hidden;
+  max-height: 300px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
+  height: 300px;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+content .channelContent .chatEntry .fileAttachment a {
+  color: #000;
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+content .channelContent .chatEntry .fileAttachment a.downloadBtn {
+  float: right;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+content .channelContent .chatEntry .fileAttachment a.downloadBtn::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f019";
+  cursor: pointer;
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+content .channelContent .chatEntry .fileAttachment::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+  content: "\f15b";
+  cursor: pointer;
+  font-size: 1.8em;
+}
+/* Chat input field */
+
+content .channelInput {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  padding-right: 0;
+  font-weight: bold;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  color: #000;
+  overflow: hidden;
+  max-height: 59px;
+}
+
+content .channelInput .attachBtn label::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f0c6";
+  cursor: pointer;
+}
+
+content .channelInput .attachBtn input[type="file"]:not([value=""]) {
+  color: green;
+}
+
+content .channelInput .attachBtn {
+  padding-left: 5px;
+  padding-right: 10px;
+}
+
+content .channelInput .attachBtn .detachFileBtn {
+  height: 20px;
+  width: 18px;
+  position: absolute;
+  top: 20px;
+  cursor: pointer;
+  transition: 100ms;
+  opacity: 1;
+}
+
+content .channelInput .attachBtn .detachFileBtn.disabled {
+  visibility: hidden;
+  opacity: 0;
+}
+
+content .channelInput .attachBtn .detachFileBtn .dot {
+  height: 7.5px;
+  width: 7.5px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #00baff;
+  border-radius: 50%;
+  transition: 100ms;
+}
+
+content .channelInput .attachBtn .detachFileBtn:hover .dot {
+  background-color: #f00;
+}
+
+content .channelInput .inputField {
+  width: 100%;
+}
+
+content .channelInput div {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+content .channelInput textarea {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #000;
+  border-radius: 5px;
+  border: 0;
+  margin: 0;
+  outline: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 11pt;
+  resize: none;
+  font-family: inherit;
+}
+
+content .channelInput textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+content .channelInput button[type="submit"] {
+  background-color: rgba(0, 0, 0, 0);
+  color: rgba(0, 0, 0, 0.5);
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: 100ms;
+  padding: 10px;
+}
+
+content .channelInput button[type="submit"]::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f1d8";
+}
+
+content .channelInput button[type="submit"]:hover {
+  color: #87da72;
+}
+
+content .channelInput .addEmojiBtn::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+  content: "\f118";
+  padding-right: 10px;
+  padding-left: 10px;
+  font-size: 13pt;
+}
+
+/* Member List box */
+
+aside {
+  position: fixed;
+  width: 0;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  transition: 100ms;
+  height: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.openMembers aside {
+  width: 240px;
+}
+
+aside .header {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  padding-right: 0;
+  font-weight: 600;
+  box-sizing: border-box;
+  color: #000;
+  border-left: 2px solid rgba(0, 0, 0, 0.15);
+  padding-top: calc(var(--header-padding) + 25px);
+}
+
+aside .content {
+  height: calc(100% - 63px);
+  width: 100%;
+  justify-content: flex-end;
+  padding: 7.5px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-left: 2px solid rgba(0, 0, 0, 0.15);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+aside .content .entry {
+  height: auto;
+  padding: 5px 10px;
+  box-sizing: border-box;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.7);
+  transition: 100ms;
+  cursor: pointer;
+}
+
+aside .content .entry:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+::selection {
+  background-color: rgba(168, 206, 255, 0.45);
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
