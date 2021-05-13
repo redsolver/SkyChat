@@ -7,7 +7,7 @@ class MySkyService {
   final profileDAC = ProfileDAC();
 
   final feedDAC = FeedDAC();
-  final socialDAC = SocialDAC();
+  // final socialDAC = SocialDAC();
 
   final isLoggedIn = Observable<bool>(initialValue: null);
 
@@ -25,7 +25,7 @@ class MySkyService {
 
     print('loaded MySky');
 
-    await mySky.loadDACs([socialDAC]);
+    await mySky.loadDACs([/* socialDAC */]);
 
     print('loaded DACs');
 

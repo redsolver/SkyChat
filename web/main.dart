@@ -42,6 +42,8 @@ void skychatClick(String type, [String id]) {
 Map<String, dynamic> UI;
 
 Future<void> sendMessage(String message) async {
+  if ((querySelector('#msgField') as InputElement).disabled) return;
+
   print('sendMessage');
   (querySelector('#msgField') as InputElement).disabled = true;
   final path = '${mySky.dataDomain}/${currentServerData?.id}/messages.json';
@@ -65,6 +67,32 @@ Future<void> sendMessage(String message) async {
 
   print('lastIndex ${lastIndex}');
 
+  final scrollElem = UI['content']['chatWindow']['scrollElem'];
+  final autoScroll = scrollElem.scrollHeight - 5 <=
+      scrollElem.clientHeight + scrollElem.scrollTop;
+
+  insertMessage(
+    Post(
+      content: PostContent(
+        ext: {
+          "future.skychat.domain": {
+            "userId": mySky.userId,
+            "serverId": currentServerData.id,
+            "channelName": currentChannelId,
+            "i": lastIndex + 1,
+          }
+        },
+        text: message,
+        textContentType: 'text/plain',
+      ),
+    ),
+    true,
+  );
+
+  if (autoScroll) {
+    scrollElem.scrollTop = scrollElem.scrollHeight - scrollElem.clientHeight;
+  }
+
   data['messages'].add({
     'content': {
       'text': message,
@@ -73,7 +101,7 @@ Future<void> sendMessage(String message) async {
     'index': lastIndex + 1,
   });
 
-  while (data['messages'].length > 4) {
+  while (data['messages'].length > 8) {
     (data['messages'] as List).removeAt(0);
   }
 
@@ -89,6 +117,8 @@ Future<void> sendMessage(String message) async {
 
   (querySelector('#msgField') as InputElement).disabled = false;
 }
+
+SkynetUser publicUser;
 
 void main() async {
   var host = window.location.hostname.split('.hns.').last;
@@ -142,6 +172,9 @@ void main() async {
   });
 
   await mySky.init();
+
+  publicUser =
+      await SkynetUser.createFromSeedAsync(List.generate(32, (index) => 0));
 
   UI = {
     'nav': document.getElementsByTagName("nav")[0],
@@ -242,6 +275,14 @@ void subscribeToMemberList(String serverId, String ref) {
 
         if (serverId == currentServerData?.id) {
           RenderMemberList();
+          RenderInputField();
+        }
+
+        if (mySky.isLoggedIn.value == true) {
+          final isMember = memberListDB[serverId].containsKey(mySky.userId);
+          if (!isMember) {
+            sendJoinRequest(serverId);
+          }
         }
       } catch (e, st) {
         print(e);
@@ -250,6 +291,35 @@ void subscribeToMemberList(String serverId, String ref) {
       // print(srv);
     });
   }
+}
+
+void sendJoinRequest(String serverId) async {
+  print('sendJoinRequest');
+
+  final path = 'future.skychat.domain/$serverId/join.request.json';
+  final res = await getJSONWithRevision(
+    publicUser.id,
+    path,
+  );
+
+  var data = res.data;
+
+  // data = [];
+
+  if (data == null) {
+    data = [];
+  }
+  if (data.contains(mySky.userId)) {
+    return;
+  }
+  data.add(mySky.userId);
+
+  await ws.setJSON(
+    publicUser,
+    path,
+    data,
+    res.revision + 1,
+  );
 }
 
 void subscribeToChannel(String serverId, String channelName, String ref) {
@@ -476,6 +546,24 @@ void loadUserProfileAsync(String userId) async {
   });
 }
 
+void RenderInputField() {
+  final InputElement inputForm = document.querySelector("#msgField");
+
+  final isMember =
+      (memberListDB[currentServerData?.id] ?? {}).containsKey(mySky.userId);
+
+  if (isMember) {
+    inputForm.disabled = false;
+    inputForm.placeholder = "Say something...";
+  } else {
+    inputForm.value = '';
+    inputForm.disabled = true;
+    inputForm.placeholder =
+        "You can't send messages until an Admin of this server verified you";
+    // inputForm.placeholder = "You do not have permission to send messages here";
+  }
+}
+
 void RenderMessages(String channelId) async {
   // Get currently active channel
   var currentChannelElem =
@@ -495,9 +583,9 @@ void RenderMessages(String channelId) async {
         "You do not have permission to send messages here";
     App.UI.content.inputForm.msg.value = string.Empty;
   } else { */
-  final InputElement inputForm = document.querySelector("#msgField");
-  inputForm.disabled = false;
-  inputForm.placeholder = "Say something...";
+
+  RenderInputField();
+
 /*   } */
   currentChannelId = channelId;
 
@@ -515,14 +603,27 @@ void RenderMessages(String channelId) async {
   scrollElem.scrollTop = scrollElem.scrollHeight - scrollElem.clientHeight;
 }
 
-void insertMessage(Post post) {
+void insertMessage(Post post, [bool isDraft = false]) {
+  print('insertMessage');
+  final userId = post.content.ext['future.skychat.domain']['userId'];
+  final index = post.content.ext['future.skychat.domain']['i'];
+  final id = 'msg_${userId}_$index';
+
+  final existingElement = document.getElementById(id);
+
+  if (existingElement != null) {
+    existingElement.remove();
+  }
+
   final Element chatWindowElement = UI['content']['chatWindow']['elem'];
   // TODO Show loading indicator if null
-  final baseElem = document.createElement("div");
-  baseElem.setAttribute("id", "msg_" + post.fullId);
-  baseElem.classes.add("chatEntry");
 
-  final userId = post.content.ext['future.skychat.domain']['userId'];
+  final baseElem = document.createElement("div");
+  if (isDraft) {
+    baseElem.style.opacity = '40%';
+  }
+  baseElem.setAttribute("id", id);
+  baseElem.classes.add("chatEntry");
 
   final usernameField = document.createElement("span");
   if (userId == null) {
@@ -539,12 +640,14 @@ void insertMessage(Post post) {
 
   baseElem.append(usernameField);
 
-  final dateTimeField = document.createElement('span');
+  if (post.ts != null) {
+    final dateTimeField = document.createElement('span');
 
-  dateTimeField.innerText =
-      ' ${DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(post.ts))}';
+    dateTimeField.innerText =
+        ' ${DateFormat.Hm().format(DateTime.fromMillisecondsSinceEpoch(post.ts))}';
 
-  baseElem.append(dateTimeField);
+    baseElem.append(dateTimeField);
+  }
 
   final messageField = document.createElement("div");
   messageField.innerText = post.content.text;

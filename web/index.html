@@ -22,7 +22,7 @@
   <!-- Feed DAC -->
   <script src="https://feed-dac.hns.siasky.net/library.js"></script>
   <!-- Social DAC -->
-  <script src="https://social-dac.hns.siasky.net/library.js"></script>
+  <!-- <script src="https://social-dac.hns.siasky.net/library.js"></script> -->
 </head>
 
 <body>
@@ -166,17 +166,18 @@
     </div>
     <form id="channelInput" style="margin-bottom: 0px;">
 
-      <div style="display: flex;">
+      <div style="padding: 0px 16px; display: flex;">
 
-        <div class="inputField" style="padding-right: 10px; flex-grow: 1;">
-          <input type="text" placeholder="Write something..." id="msgField"
+        <div class="inputField" style="padding-right: 10px; flex-grow: 4">
+          <input type="text" id="msgField" autocomplete="off"
+            style=" width: 100%; outline: transparent; border-radius: 1px; padding: 8px 8px; border-width: thin; border-color: #00C65E;"
             placeholder="You do not have permission to send messages here" disabled>
 
         </div>
 
 
         <input class="button-primary float-right" type="submit" value="Send"
-          style="flex-basis: 70px;  padding: 0 1.0rem;">
+          style="flex-basis: 70px;  margin-left: 18px; background-color: #00C65E; border: none; color: white;">
 
       </div>
 
