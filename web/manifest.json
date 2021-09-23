@@ -1,0 +1,28 @@
+{
+    "background_color": "#fff",
+    "display": "standalone",
+    "homepage_url": "https://github.com/redsolver/SkyChat",
+    "providedBy": { "name": "SkyChat", "url": "https://github.com/redsolver/SkyChat" },
+    "icons": [
+      {
+        "src": "./img/192x192_App_Icon.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+        "src": "./img/512x512_App_Icon.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ],
+    "orientation": "portrait",
+    "name": "SkyChat",
+    "description": "SkyChat is a decentralized chat platform inspired by discord and slack.",
+    "iconPath": "./img/256x256_App_Icon.png",
+    "short_name": "SkyChat",
+    "start_url": ".",
+    "theme_color": "#ff007a",
+    "skylink": "AQAkIMQBgKF8jsnWQQTlgQugAR4XKWaf6zNlNx4I2XrQqg"
+  }
